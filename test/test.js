@@ -8,4 +8,4 @@ it (
         let instance = await Insurance.deployed()
         await instance.addProduct(1,"iphone",web3.utils.toWei('7', 'ether')) });
 
-}
+})
