@@ -1,5 +1,5 @@
 import Web3 from "web3";
-import metaCoinArtifact from "../../build/contracts/MetaCoin.json";
+import metaCoinArtifact from "../../build/contracts/Insurance.json";
 
 const App = {
   web3: null,
@@ -22,7 +22,7 @@ const App = {
       const accounts = await web3.eth.getAccounts();
       this.account = accounts[0];
 
-      this.refreshBalance();
+      //this.refreshBalance();
     } catch (error) {
       console.error("Could not connect to contract or chain.");
     }
@@ -34,19 +34,23 @@ const App = {
 
     const balanceElement = document.getElementsByClassName("balance")[0];
     balanceElement.innerHTML = balance;
-  },
+   },
 
-  sendCoin: async function() {
-    const amount = parseInt(document.getElementById("amount").value);
-    const receiver = document.getElementById("receiver").value;
+   addProduct: async function() {
+    const productId = parseInt(document.getElementById("productId").value);
+    const productName = document.getElementById("productName").value;
+    const price = parseInt(document.getElementById("price").value);
+    //const offered = parseInt(document.getElementById("offered").value);
+    //const amount = parseInt(document.getElementById("amount").value);
+    //const receiver = document.getElementById("receiver").value;
 
     this.setStatus("Initiating transaction... (please wait)");
 
-    const { sendCoin } = this.meta.methods;
-    await sendCoin(receiver, amount).send({ from: this.account });
+    const { addProduct } = this.meta.methods;
+   await addProduct(productId,productName,price).send({ from: this.account });
 
-    this.setStatus("Transaction complete!");
-    this.refreshBalance();
+    this.setStatus("You add a product" + this.account);
+    
   },
 
   setStatus: function(message) {
@@ -74,3 +78,4 @@ window.addEventListener("load", function() {
 
   App.start();
 });
+
